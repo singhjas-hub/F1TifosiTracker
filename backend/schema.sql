@@ -1,4 +1,6 @@
+CREATE DATABASE
 -- Create Drivers Table
+
 CREATE TABLE Drivers (
     driver_id INT PRIMARY KEY AUTO_INCREMENT,
     first_name VARCHAR(50) NOT NULL,
@@ -51,3 +53,4 @@ CREATE TABLE Watchlist (
     FOREIGN KEY (user_id) REFERENCES Users(user_id),
     FOREIGN KEY (driver_id) REFERENCES Drivers(driver_id)
 );
+

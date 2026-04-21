@@ -1,0 +1,21 @@
+/* F1 Tifosi Tracker - Global Styles */
+:root {
+  --f1-red: #e10600;
+  --dark-grey: #15151e;
+  --carbon: #1f1f27;
+  --white: #ffffff;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--dark-grey);
+  color: var(--white);
+  font-family: 'Titillium Web', sans-serif; /* The official F1 font style */
+}
+
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
