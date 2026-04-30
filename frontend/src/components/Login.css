@@ -1,0 +1,59 @@
+.login-card {
+    background-color: #1f1f27; /* Carbon-fiber dark */
+    padding: 2rem;
+    border-radius: 8px;
+    border-top: 4px solid #e10600; /* F1 Red Stripe */
+    width: 300px;
+    margin: 50px auto;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+
+.input-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #ccc;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    background: #15151e;
+    border: 1px solid #333;
+    color: white;
+    border-radius: 4px;
+}
+
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #e10600;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+}
+
+.login-btn:hover {
+    background-color: #b30500;
+}
+
+.toggle-text {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #aaa;
+    cursor: pointer;
+    text-align: center;
+    transition: color 0.2s; 
+}
+
+.toggle-text:hover {
+    color: var(--white);
+    text-decoration: underline; 
+}

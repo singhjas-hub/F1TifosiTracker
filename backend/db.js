@@ -1,0 +1,16 @@
+const mysql = require('mysql2');
+require('dotenv').config();
+
+// Create a connection pool (better for performance than a single connection)
+const pool = mysql.createPool({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
+});
+
+// Use the promise-based wrapper for cleaner code
+module.exports = pool.promise();

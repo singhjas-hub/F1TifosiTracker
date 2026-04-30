@@ -19,3 +19,114 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+.f1-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: var(--carbon);
+  border-bottom: 2px solid var(--f1-red);
+}
+
+.nav-links span {
+  margin: 0 15px;
+  cursor: pointer;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+}
+
+.nav-links span:hover {
+  color: var(--f1-red);
+}
+
+.logout-link {
+  background: none;
+  border: 1px solid var(--f1-red);
+  color: white;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-left: 10px;
+}
+
+.driver-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.driver-card {
+    background: #1f1f27;
+    border-left: 5px solid var(--team-color, #444); /* Team stripe! */
+    border-radius: 8px;
+    padding: 20px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+}
+
+.driver-card:hover {
+  transform: scale(1.02);
+  background: #2a2a35;
+}
+
+.driver-number {
+    font-size: 2rem;
+    font-weight: 900;
+    font-style: italic;
+    opacity: 0.2;
+    position: absolute;
+    right: 10px;
+    top: 5px;
+}
+
+.follow-btn {
+  background: transparent;
+  border: 1px solid var(--f1-red);
+  color: white;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.driver-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--f1-red);
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+}
+
+.theme-ferrari { --f1-red: #e10600; --team-color: #ff2800; }
+.theme-mercedes { --f1-red: #00d2be; --team-color: #00d2be; }
+.theme-redbull { --f1-red: #0600ef; --team-color: #0600ef; }
+.theme-mclaren { --f1-red: #ff8700; --team-color: #ff8700; }
+.theme-williams { --f1-red: #005aff; --team-color: #005aff; }
+
+.loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--f1-red);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
