@@ -1,10 +1,18 @@
+/**
+ * F1 Tifosi Tracker - Login & Authentication Styles
+ * Design Philosophy: Carbon-fiber aesthetics with "Pit Wall" high-contrast accents.
+ */
+
 .login-card {
-    background-color: #1f1f27; /* Carbon-fiber dark */
+    background-color: #1f1f27; 
     padding: 2rem;
     border-radius: 8px;
-    border-top: 4px solid #e10600; /* F1 Red Stripe */
+    
+    border-top: 4px solid #e10600; 
+    
     width: 300px;
     margin: 50px auto;
+    
     box-shadow: 0 4px 15px rgba(0,0,0,0.5);
 }
 
@@ -17,6 +25,9 @@
     display: block;
     margin-bottom: 0.5rem;
     color: #ccc;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .input-group input {
@@ -26,6 +37,13 @@
     border: 1px solid #333;
     color: white;
     border-radius: 4px;
+    box-sizing: border-box; 
+    transition: border-color 0.3s ease;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #e10600; 
 }
 
 .login-btn {
@@ -38,14 +56,20 @@
     font-weight: bold;
     cursor: pointer;
     text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background-color 0.2s ease, transform 0.1s;
 }
 
 .login-btn:hover {
     background-color: #b30500;
 }
 
+.login-btn:active {
+    transform: translateY(1px); 
+}
+
 .toggle-text {
-    margin-top: 1rem;
+    margin-top: 1.2rem;
     font-size: 0.9rem;
     color: #aaa;
     cursor: pointer;
@@ -54,6 +78,6 @@
 }
 
 .toggle-text:hover {
-    color: var(--white);
+    color: #ffffff; 
     text-decoration: underline; 
 }

@@ -1,9 +1,24 @@
+/**
+ * Profile Component
+ * Purpose: Manages user-specific preferences and account lifecycle actions.
+ * Features:
+ * - Persistent Preferences: Updates the 'fav_team' in the Users table via PUT.
+ * - Relational Archival: Triggers the multi-stage deletion/migration process.
+ * - Audit Visibility: Conditionally renders the Archive component to view historical data.
+ */
+
 import React, { useState } from 'react';
 import Archive from './Archive'; 
 
 const Profile = ({ user, favTeam, setFavTeam, onLogout }) => {
+    // Local state to toggle the visibility of the historical audit trail
     const [showArchive, setShowArchive] = useState(false);
 
+    /**
+     * Preference Update Handler
+     * Communicates with the /api/profile/update endpoint to persist 
+     * theme choices in the database.
+     */
     const handleUpdate = async () => {
         try {
             const response = await fetch('http://localhost:5000/api/profile/update', {
@@ -23,8 +38,16 @@ const Profile = ({ user, favTeam, setFavTeam, onLogout }) => {
         }
     };
 
+    /**
+     * Account Deletion & Migration Handler
+     * This triggers the 'Nontrivial' backend logic that purges active data
+     * while preserving an audit trail in the Deleted_Users table.
+     */
     const handleDeleteAccount = async () => {
-        const confirm = window.confirm("Are you sure? This will archive your account data and log you out.");
+        const confirm = window.confirm(
+            "Warning: This will permanently archive your account data and end your session. Proceed?"
+        );
+        
         if (confirm) {
             try {
                 const response = await fetch(`http://localhost:5000/api/profile/delete/${user}`, {
@@ -32,24 +55,28 @@ const Profile = ({ user, favTeam, setFavTeam, onLogout }) => {
                 });
 
                 if (response.ok) {
-                    alert("Account archived and deleted.");
-                    onLogout();
+                    alert("Account successfully archived. You have been logged out.");
+                    onLogout(); // Clears local session state in App.js
                 }
             } catch (error) {
-                alert("Error deleting account.");
+                alert("Critical Error: Migration failed.");
             }
         }
     };
 
     return (
         <div className="profile-container" style={{ padding: '20px', maxWidth: '600px', margin: '0 auto' }}>
-            <h2 style={{ borderBottom: '2px solid var(--f1-red)', paddingBottom: '10px' }}>User Settings</h2>
+            <h2 style={{ borderBottom: '2px solid var(--f1-red)', paddingBottom: '10px' }}>
+                User Settings
+            </h2>
             
             <div className="profile-card" style={{ background: '#1f1f27', padding: '20px', borderRadius: '8px', marginTop: '20px' }}>
                 <p style={{ marginBottom: '20px' }}><strong>Tifosi Member:</strong> {user}</p>
                 
                 <div className="input-group" style={{ marginBottom: '20px' }}>
-                    <label style={{ display: 'block', marginBottom: '10px', color: '#ccc' }}>Favorite Team</label>
+                    <label style={{ display: 'block', marginBottom: '10px', color: '#ccc' }}>
+                        Favorite Team (Dashboard Theme)
+                    </label>
                     <select 
                         value={favTeam} 
                         onChange={(e) => setFavTeam(e.target.value)}
@@ -79,7 +106,7 @@ const Profile = ({ user, favTeam, setFavTeam, onLogout }) => {
                     Delete My Account
                 </button>
 
-                {/* THE NEW FEATURE: ARCHIVE TOGGLE */}
+                {/* Audit Trail Toggle: Showcases the 'Deleted_Users' historical table */}
                 <button 
                     onClick={() => setShowArchive(!showArchive)}
                     style={{ 
@@ -97,7 +124,6 @@ const Profile = ({ user, favTeam, setFavTeam, onLogout }) => {
                 </button>
             </div>
 
-            {/* Conditionally rendering the Archive component below the card */}
             {showArchive && (
                 <div style={{ marginTop: '30px' }}>
                     <Archive />

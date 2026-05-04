@@ -1,12 +1,27 @@
+/**
+ * F1 Tifosi Tracker - Global Reset & Font Smoothing
+ * Purpose: Establishes the baseline environment for the application.
+ * Ensures consistent text rendering and system font fallbacks across all browsers.
+ */
+
 body {
   margin: 0;
+  /* System Font Stack: Optimizes performance by using native OS fonts 
+     before the custom Titillium Web font is loaded. */
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
+    
+  /* Font Smoothing: Enhances legibility on high-resolution displays (Retina/4K) */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/**
+ * Monospace Reset:
+ * Specifically used for lap times and telemetry deltas to ensure 
+ * numbers align vertically in tables.
+ */
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
