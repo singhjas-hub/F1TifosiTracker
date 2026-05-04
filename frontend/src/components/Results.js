@@ -12,11 +12,9 @@
 import React, { useState, useEffect } from 'react';
 
 const Results = ({ watchlist = [] }) => {
-    // Component State: Track selection and fetched telemetry data
     const [race, setRace] = useState('Bahrain');
     const [stats, setStats] = useState([]);
 
-    // Geographic SVG coordinates for track visualization
     const trackData = {
         'Bahrain': {
             path: "M150,50 L250,80 L230,120 L280,130 L320,180 L300,240 L350,300 L250,350 L180,320 L150,220 L120,180 L100,100 Z",
@@ -32,26 +30,18 @@ const Results = ({ watchlist = [] }) => {
         }
     };
 
-    /**
-     * Effect Hook: Syncs telemetry data whenever the selected track changes.
-     * The backend returns RANK() and session_best anchor for each row.
-     */
     useEffect(() => {
         fetch(`http://localhost:5000/api/stats/${race}`)
             .then(res => res.json())
             .then(data => setStats(data))
-            .catch(err => console.error("Telemetry fetch error:", err));
+            .catch(err => console.error("API Error:", err));
     }, [race]);
 
     return (
         <div className="stats-container">
             <div className="track-box">
                 <div className="dropdown-wrapper">
-                    <select 
-                        className="race-dropdown" 
-                        value={race} 
-                        onChange={(e) => setRace(e.target.value)}
-                    >
+                    <select className="race-dropdown" value={race} onChange={(e) => setRace(e.target.value)}>
                         <option value="Bahrain">Bahrain GP</option>
                         <option value="Silverstone">British GP</option>
                         <option value="Monza">Italian GP</option>
@@ -67,7 +57,6 @@ const Results = ({ watchlist = [] }) => {
                 <h3 className="track-title">{race.toUpperCase()} LIVE TELEMETRY</h3>
             </div>
 
-            {/* Right Section: Processed Leaderboard */}
             <div className="leaderboard" style={{maxHeight: '550px', overflowY: 'auto'}}>
                 <table className="stats-table">
                     <thead>
@@ -85,9 +74,6 @@ const Results = ({ watchlist = [] }) => {
                             const pbTime = Number(s.personal_best);
                             const lapOneLeaderTime = Number(s.session_best); 
                             
-                            // Delta Calculation:
-                            // We compare current time to the Lap 1 leader to see 
-                            // race evolution relative to the start.
                             const isBaseline = s.lap_number === 1 && s.position === 1;
                             const rawGap = lapTime - lapOneLeaderTime;
                             
@@ -95,9 +81,12 @@ const Results = ({ watchlist = [] }) => {
                             let deltaColor;
 
                             if (isBaseline) {
-                                displayDelta = "INTERVAL";
+                                // L1 P1 remains the unique neutral starting point
+                                displayDelta = "0.000s";
                                 deltaColor = 'white';
                             } else {
+                                // Negative sign for times faster than L1 P1 (Green)
+                                // Positive sign for times slower than L1 P1 (Red)
                                 const sign = rawGap < 0 ? "-" : "+";
                                 displayDelta = `${sign}${Math.abs(rawGap).toFixed(3)}s`;
                                 deltaColor = rawGap < 0 ? '#00ff00' : '#ff4d4d';
