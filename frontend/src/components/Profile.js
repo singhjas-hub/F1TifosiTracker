@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Archive from './Archive'; 
 
 const Profile = ({ user, favTeam, setFavTeam, onLogout }) => {
+    const [showArchive, setShowArchive] = useState(false);
 
     const handleUpdate = async () => {
         try {
@@ -22,16 +24,15 @@ const Profile = ({ user, favTeam, setFavTeam, onLogout }) => {
     };
 
     const handleDeleteAccount = async () => {
-        const confirm = window.confirm("Are you sure? This will remove all your data permanently.");
+        const confirm = window.confirm("Are you sure? This will archive your account data and log you out.");
         if (confirm) {
             try {
-                // We'll build this DELETE route next!
                 const response = await fetch(`http://localhost:5000/api/profile/delete/${user}`, {
                     method: 'DELETE'
                 });
 
                 if (response.ok) {
-                    alert("Account deleted.");
+                    alert("Account archived and deleted.");
                     onLogout();
                 }
             } catch (error) {
@@ -41,7 +42,7 @@ const Profile = ({ user, favTeam, setFavTeam, onLogout }) => {
     };
 
     return (
-        <div className="profile-container" style={{ padding: '20px', maxWidth: '400px', margin: '0 auto' }}>
+        <div className="profile-container" style={{ padding: '20px', maxWidth: '600px', margin: '0 auto' }}>
             <h2 style={{ borderBottom: '2px solid var(--f1-red)', paddingBottom: '10px' }}>User Settings</h2>
             
             <div className="profile-card" style={{ background: '#1f1f27', padding: '20px', borderRadius: '8px', marginTop: '20px' }}>
@@ -73,11 +74,35 @@ const Profile = ({ user, favTeam, setFavTeam, onLogout }) => {
 
                 <button 
                     onClick={handleDeleteAccount}
-                    style={{ background: 'transparent', color: '#ff4d4d', border: '1px solid #ff4d4d', padding: '10px', width: '100%', cursor: 'pointer', borderRadius: '4px' }}
+                    style={{ background: 'transparent', color: '#ff4d4d', border: '1px solid #ff4d4d', padding: '10px', width: '100%', cursor: 'pointer', borderRadius: '4px', marginBottom: '15px' }}
                 >
                     Delete My Account
                 </button>
+
+                {/* THE NEW FEATURE: ARCHIVE TOGGLE */}
+                <button 
+                    onClick={() => setShowArchive(!showArchive)}
+                    style={{ 
+                        background: '#333', 
+                        color: '#ffd700', 
+                        border: '1px solid #ffd700', 
+                        padding: '10px', 
+                        width: '100%', 
+                        cursor: 'pointer', 
+                        borderRadius: '4px',
+                        fontWeight: 'bold'
+                    }}
+                >
+                    {showArchive ? "Hide Archive" : "View Historical User Audit"}
+                </button>
             </div>
+
+            {/* Conditionally rendering the Archive component below the card */}
+            {showArchive && (
+                <div style={{ marginTop: '30px' }}>
+                    <Archive />
+                </div>
+            )}
         </div>
     );
 };
